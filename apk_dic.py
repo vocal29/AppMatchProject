@@ -3,7 +3,7 @@ import logging
 
 
 def save():
-    infile = open("D:\\work\\apk\\apkPureEnClean.txt", 'r')
+    infile = open("D:\\work\\apk\\apkPureAllClean.txt", 'r', encoding="utf8")
     words = []
     # 加载数据
     for line in infile:
@@ -16,17 +16,17 @@ def save():
     # 生成字典
     dictionary = corpora.Dictionary(app_names, prune_at=2000000)
     # 保存生成的字典
-    # dictionary.save('D:\\work\\apk\\appNameDic.dict')
+    # dictionary.save('D:\\work\\apk\\appNameUnDic.dict')
     dictionary.save_as_text(
-        'D:\\work\\apk\\apkNameDic.dict',
+        'D:\\work\\apk\\apkNameAllDic.dict',
         sort_by_word=True)
 
 
 def load():
     # 加载字典
-    # dictionary.load('D:\\work\\apk\\apkNameDic.dict')
+    # dictionary.load('D:\\work\\apk\\apkNameUnDic.dict')
     dictionary = corpora.Dictionary.load_from_text(
-        'D:\\work\\apk\\apkNameDic.dict')
+        'D:\\work\\apk\\apkNameAllDic.dict')
     # print(dictionary.token2id)
     # for key in dictionary.iterkeys():
     #     print(key, dictionary.get(key), dictionary.dfs[key])
@@ -34,7 +34,7 @@ def load():
     # print(corpus, missing)
     # 保存语料库，保存的格式有多种形式， Market Matrix，Joachim’s SVMlight、Blei’s LDA-C、GibbsLDA++
     # 将向量化后的词典保存,保存后生成两个文件，一个corpora.mm，分别(文章序号(从1开始),词向量编号，次出现的次数)，一个corpora.mm.index
-    infile = open("D:\\work\\apk\\apkPureEnClean.txt", 'r')
+    infile = open("D:\\work\\apk\\apkPureAllClean.txt", 'r', encoding="utf8")
     words = []
     data = []
     # 加载数据
@@ -47,16 +47,16 @@ def load():
     app_names = [[word for word in words.split(" ")] for words in words]
     corpus = [dictionary.doc2bow(text) for text in app_names]
 
-    corpora.MmCorpus.serialize('D:\\work\\apk\\apkCorpora.mm', corpus)
-    corpus = corpora.MmCorpus('D:\\work\\apk\\apkCorpora.mm')
+    corpora.MmCorpus.serialize('D:\\work\\apk\\apkAllCorpora.mm', corpus)
+    corpus = corpora.MmCorpus('D:\\work\\apk\\apkAllCorpora.mm')
     # 需要转换成list
     corpus_list = list(corpus)
     # print(corpus_list)
     tfidf_model = models.TfidfModel(corpus_list)
     # 将Tfidf模型存储
-    tfidf_model.save("D:\\work\\apk\\apkTfidfModel.tfidf")
+    tfidf_model.save("D:\\work\\apk\\apkAllTfidfModel.tfidf")
     corpus_tfidf = tfidf_model[corpus_list]
-    testword = "uc browser"
+    testword = "whatsapp"
     test_bow = dictionary.doc2bow([word for word in testword.split(' ')])
     # print(test_bow)
     # # 将corpus转换成tfidf模型
@@ -64,7 +64,7 @@ def load():
     print(tfidf_model[test_bow])
     # 计算tf-idf相似度
     index = similarities.SparseMatrixSimilarity(
-        tfidf_model[corpus_list], num_features=13826)
+        tfidf_model[corpus_list], num_features=25000)
     sims = index[tfidf_model[test_bow]]
     # 相似度排名
     rank = sorted(enumerate(sims), key=lambda item: -item[1])
