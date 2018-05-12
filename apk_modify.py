@@ -2,7 +2,7 @@ with open("D:\\work\\apk\\matchDemoAllDot7.txt", "r", encoding='utf8') as f:
     lines = f.readlines()
     # print(lines)
 # 修改不合理数据
-with open("D:\\work\\apk\\matchDemoModifyDot7.txt", "w", encoding='utf8') as f_w:
+with open("D:\\work\\apk\\matchDemoAllModifyDot7.txt", "w", encoding='utf8') as f_w:
     for line in lines:
         app_name = line.split(",")[0].strip()
         # WhatsApp 匹配不准确
