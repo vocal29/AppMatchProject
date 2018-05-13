@@ -87,7 +87,7 @@ for line in lines:
                 # apk_developer
             )
             # 存储查询后的xender_name
-            with open("D:\\work\\app\\restDemoCrawled.txt", "a", encoding='utf8') as ff:
+            with open("D:\\work\\apk\\restDemoCrawled.txt", "a", encoding='utf8') as ff:
                 ff.write(apk_name + '\n')
         except BaseException:
             continue
