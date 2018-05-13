@@ -43,25 +43,43 @@ for line in lines:
         for x in result:
             app_class += x
         apk_class = app_class.strip()
-        apk_size_list = soup01.find('span', {'class': 'fsize'})
-        apk_size = apk_size_list.find('span').text
-        apk_score = '0.0'
+        size_code = soup01.find('span', {'class': 'fsize'})
+        if size_code is None:
+            apk_size = "N/A"
+        else:
+            apk_size = size_code.find('span').text.strip()
+        score_code = soup01.find('span', {'class': 'average'})
+        if score_code is None:
+            apk_score = "0.0"
+        else:
+            apk_score = soup01.find('span', {'class': 'average'}).text.strip()
+        # version_code = soup01.find('div', {'class': 'details-sdk'})
+        # if version_code is None:
+        #     apk_version = "N/A"
+        # else:
+        #     apk_version = soup01.find('div', {'class': 'details-sdk'}).text.strip()
+        # developer_code = soup01.find('div', {'class': 'details-author'})
+        # if developer_code is None:
+        #     apk_developer = "N/A"
+        # else:
+        #     apk_developer = soup01.find('div', {'class': 'details-author'}).text.strip()
+
         info.insert_one(
             {
                 'name': '{}'.format(apk_name),
                 'class': '{}'.format(apk_class),
                 'score': '{}'.format(apk_score),
-                # 'version': '{}'.format(app_version),
+                # 'version': '{}'.format(apk_version),
                 'size': '{}'.format(apk_size),
-                # 'developer': '{}'.format(app_developer),
+                # 'developer': '{}'.format(apk_developer)
             })
         print(
             apk_name,
             apk_size,
             apk_class,
             apk_score,
-            # app_version,
-            # app_developer
+            # apk_version,
+            # apk_developer
         )
     except BaseException:
         continue
