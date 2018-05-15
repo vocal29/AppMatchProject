@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 from urllib import parse
 import pymongo
 import re
+import logging
+import time
 
 
 # 连接MongoDB
@@ -10,6 +12,14 @@ client = pymongo.MongoClient('localhost', 27017)
 # 新建数据库
 mydb = client['apkpure']
 info = mydb['apksupplement']
+# 开始计时
+time_begin = time.localtime(time.time())
+print(time_begin)
+with open("D:\\work\\apk\\restSearchTimeCount.txt", "a") as f:
+    f.write("time_begin:" + "{}".format(time_begin) + '\n')
+logging.basicConfig(
+    format='%(asctime)s : %(levelname)s : %(message)s',
+    level=logging.INFO)
 # APKPure首页
 with open("D:\\work\\apk\\restDemoClean.txt", "r", encoding="utf8") as f:
     lines = f.readlines()
@@ -88,6 +98,12 @@ for line in lines:
             )
             # 存储查询后的xender_name
             with open("D:\\work\\apk\\restDemoCrawled.txt", "a", encoding='utf8') as ff:
-                ff.write(apk_name + '\n')
+                ff.write(search + '---------------' + apk_name + '\n')
         except BaseException:
             continue
+# 结束计时
+time_end = time.localtime(time.time())
+print(time_end)
+with open("D:\\work\\apk\\restSearchTimeCount.txt", "a") as f:
+    f.write("time_end" + "{}".format(time_end) + '\n')
+print(time.clock())
