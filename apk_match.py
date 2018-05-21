@@ -5,7 +5,7 @@ import time
 
 
 def load(app_to_classify):
-    infile = open("D:\\work\\apk\\apkPureAllClean.txt", 'r', encoding="utf8")
+    infile = open("D:\\work\\apk\\apkPureFinAllClean.txt", 'r', encoding="utf8")
     words = []
     # 加载数据
     for line in infile:
@@ -17,10 +17,10 @@ def load(app_to_classify):
     app_names = [[word for word in words.split(" ")] for words in words]
     # 加载字典
     dictionary = corpora.Dictionary.load_from_text(
-        'D:\\work\\apk\\apkNameAllDic.dict')
+        'D:\\work\\apk\\apkNameFinAllDic.dict')
     # 加载模型
     tfidf_model = models.TfidfModel.load(
-        "D:\\work\\apk\\apkAllTfidfModel.tfidf")  # type: np.ndarray
+        "D:\\work\\apk\\apkFinAllTfidfModel.tfidf")  # type: np.ndarray
     word_model = app_names
     corpus_model = [dictionary.doc2bow(test) for test in word_model]
     test_word = app_to_classify
@@ -31,7 +31,7 @@ def load(app_to_classify):
         # 如果test_bow为空直接跳过检索
         # 在Tfidf基础之上，进行相似性检索
         index = similarities.SparseMatrixSimilarity(
-            tfidf_model[corpus_model], num_features=25000)
+            tfidf_model[corpus_model], num_features=46000)
         sims = index[tfidf_model[test_bow]]
         # print(list(enumerate(sims)))
         # 相似度排名
@@ -41,7 +41,7 @@ def load(app_to_classify):
             # 返回满足相似度的样本材料,(index_of_document, similarity) tuples
             print("与{0}相匹配的app名称列表".format(app_names_init))
             print(pair)
-            data_init = open("D:\\work\\apk\\apkPureAll.txt", 'r', encoding="utf8")
+            data_init = open("D:\\work\\apk\\apkPureFinAll.txt", 'r', encoding="utf8")
             app_apkpure_list = data_init.readlines()[pair[0]]
             app_apkpure_name = app_apkpure_list.split(',')[0]
             app_apkpure_class = app_apkpure_list.split(',')[1]
@@ -63,7 +63,7 @@ def load(app_to_classify):
             app_size_init = app_data_list.split(",")[9][0:-1]
             data.close()
             global f
-            with open("D:\\work\\apk\\matchDemoAllDot7.txt", "a", encoding="utf8") as f:
+            with open("D:\\work\\apk\\matchDemoFinAllDot7.txt", "a", encoding="utf8") as f:
                 f.write(
                     '{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14}' .format(
                         app_name_init,

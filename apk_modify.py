@@ -1,8 +1,8 @@
-with open("D:\\work\\apk\\matchDemoAllDot7.txt", "r", encoding='utf8') as f:
+with open("D:\\work\\apk\\matchDemoFinAllDot7.txt", "r", encoding='utf8') as f:
     lines = f.readlines()
     # print(lines)
 # 修改不合理数据
-with open("D:\\work\\apk\\matchDemoAllModifyDot7.txt", "w", encoding='utf8') as f_w:
+with open("D:\\work\\apk\\matchDemoFinAllModifyDot7.txt", "w", encoding='utf8') as f_w:
     for line in lines:
         app_name = line.split(",")[0].strip()
         # WhatsApp 匹配不准确
@@ -23,13 +23,13 @@ with open("D:\\work\\apk\\matchDemoAllModifyDot7.txt", "w", encoding='utf8') as 
         f_w.write(line)
 
 # 清洗出未匹配到数据
-with open("D:\\work\\apk\\matchDemoAllModifyDot7.txt", "r", encoding='utf8') as f:
+with open("D:\\work\\apk\\matchDemoFinAllModifyDot7.txt", "r", encoding='utf8') as f:
     lines_1 = f.readlines()
     # print(lines_1)
 with open("D:\\work\\apk\\xenderDemo.txt", "r", encoding='utf8') as ff:
     lines_2 = ff.readlines()
     # print(lines_2)
-with open("D:\\work\\apk\\matchDemoAllRestDot7.txt", "w", encoding='utf8') as f_w:
+with open("D:\\work\\apk\\matchDemoFinAllRestDot7.txt", "w", encoding='utf8') as f_w:
     for line_2 in lines_2:
         xender_name = line_2.split(",")[0].strip()
         match_number = 0
