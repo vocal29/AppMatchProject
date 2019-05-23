@@ -1,2 +1,2 @@
-# XenderMatchProject
-Match xender's data with apkpure detail data.
+# AppMatchProject
+Match xender data with apkpure data.
